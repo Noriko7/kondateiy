@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #594A4E;
+  /* Updated to warm brown */
+  --font-geist-sans: "Geist Sans";
+  --font-geist-mono: "Geist Mono";
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary-orange: #FF9900;
+  /* Vivid orange from screenshot */
+  --color-text-brown: #594A4E;
+  /* Warm dark brown characteristic of Nadia */
+  --font-sans: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
+  font-size: 16px;
+  /* Base size increase for readability */
+  line-height: 1.6;
+  /* Comfortable reading spacing */
+  -webkit-font-smoothing: antialiased;
+  /* Smoother text rendering */
+}
+
+/* 印刷時: 1ページに収める縮小設定 */
+@media print {
+  @page {
+    size: A4;
+    margin: 10mm;
+  }
+
+  html,
+  body {
+    width: 100%;
+    height: auto;
+    font-size: 10px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* コンテンツを縮小して1ページに収める */
+  body {
+    transform: scale(0.85);
+    transform-origin: top left;
+    width: 117.6%;
+    /* 1 / 0.85 = 117.6% で幅を補正 */
+  }
+}

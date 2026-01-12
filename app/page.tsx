@@ -434,7 +434,7 @@ export default function Home() {
     );
 
     if (emptyNameItems.length > 0) {
-      setAlertMessage(`食材名が入力されていない行があります。\n食材名を入力するか、不要な行は削除してください。`);
+      setAlertMessage(`【重要】食材名が入力されていない行があります。\n食材名を入力するか、不要な行は削除してください。`);
       return;
     }
 

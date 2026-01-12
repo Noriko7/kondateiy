@@ -128,8 +128,12 @@ const FOOD_UNIT_DICTIONARY: { [key: string]: string[] } = {
 const getFilteredQuantityOptions = (ingredientName: string): string[] => {
   const name = ingredientName;
 
+  // 辞書のキーを長さの降順でソート（より具体的な名前を先にマッチさせるため）
+  const sortedFoods = Object.entries(FOOD_UNIT_DICTIONARY)
+    .sort((a, b) => b[0].length - a[0].length);
+
   // 辞書から単位を検索
-  for (const [food, units] of Object.entries(FOOD_UNIT_DICTIONARY)) {
+  for (const [food, units] of sortedFoods) {
     if (name.includes(food)) {
       // 単位に応じた数量オプションを生成
       const options: string[] = [];

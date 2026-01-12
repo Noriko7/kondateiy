@@ -44,6 +44,14 @@ export async function POST(req: Request) {
    - 推測によるコメント禁止
 4. 数量が明確に見えない場合は "数量不明" としてください。
 5. できるだけ一般的な名称（例：「シャウエッセン」→「ソーセージ」）に変換してください。
+6. **単位のルール**（必ず守ること）:
+   - 玉ねぎ、じゃがいも、トマト、りんご、みかん、卵 → 「個」を使う
+   - にんじん、大根、ねぎ、きゅうり、ごぼう → 「本」を使う
+   - キャベツ、レタス、白菜 → 「個」または「玉」を使う
+   - 肉類 → 「g」または「パック」を使う
+   - きのこ類（しめじ、えのき、まいたけ）→ 「パック」を使う
+   - 豆腐 → 「丁」を使う
+   - 牛乳、ジュース → 「本」または「パック」を使う
     `.trim();
 
     const response = await client.chat.completions.create({
@@ -74,7 +82,7 @@ export async function POST(req: Request) {
     });
 
     const content = response.choices[0]?.message?.content;
-    
+
     // JSON文字列のみを抽出（万が一Markdown記法が含まれていた場合への対策）
     let cleanJson = content || "[]";
     cleanJson = cleanJson.replace(/```json/g, "").replace(/```/g, "").trim();

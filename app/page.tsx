@@ -434,11 +434,19 @@ export default function Home() {
     );
 
     if (invalidItems.length > 0) {
-      if (invalidItems.length > 0) {
-        const names = invalidItems.map((i) => i.name).join("、");
-        setAlertMessage(`以下の食材の数量が入力されていません。\n正確なリストを作るために、数量を入力してください。\n\n対象:\n${names}`);
-        return;
-      }
+      const names = invalidItems.map((i) => i.name).join("、");
+      setAlertMessage(`以下の食材の数量が入力されていません。\n正確なリストを作るために、数量を入力してください。\n\n対象:\n${names}`);
+      return;
+    }
+
+    // 食材名チェック: 食材名が空で数量だけ入っている場合はブロック
+    const emptyNameItems = aggregatedList.filter(
+      (item) => !item.name || item.name.trim() === "" || item.name === "食材名を入力"
+    );
+
+    if (emptyNameItems.length > 0) {
+      setAlertMessage(`食材名が入力されていない行があります。\n食材名を入力するか、不要な行は削除してください。`);
+      return;
     }
 
     setIsGeneratingMenu(true);

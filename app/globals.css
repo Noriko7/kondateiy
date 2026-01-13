@@ -38,7 +38,7 @@ body {
   /* Smoother text rendering */
 }
 
-/* 印刷時: 1ページに収める縮小設定 */
+/* 印刷時のスタイル設定 */
 @media print {
   @page {
     size: A4;
@@ -54,11 +54,19 @@ body {
     print-color-adjust: exact;
   }
 
-  /* コンテンツを縮小して1ページに収める */
-  body {
-    transform: scale(0.85);
-    transform-origin: top left;
-    width: 117.6%;
-    /* 1 / 0.85 = 117.6% で幅を補正 */
+  /* 印刷時に非表示にする要素 */
+  .print-hidden {
+    display: none !important;
+  }
+
+  /* 決定版リストを新しいページから開始 */
+  .print-page-break-before {
+    page-break-before: always;
+    break-before: page;
+  }
+
+  /* 提案された献立のセクション */
+  .print-menu-section {
+    page-break-inside: avoid;
   }
 }

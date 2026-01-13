@@ -980,7 +980,7 @@ export default function Home() {
       <main className="max-w-5xl mx-auto px-4 py-8 space-y-8 print:w-full print:max-w-none">
 
         {/* Introduction / Title Area */}
-        <div className="bg-[#fffcf0] rounded-lg p-6 shadow-sm border border-orange-100 relative overflow-hidden">
+        <div className="bg-[#fffcf0] rounded-lg p-6 shadow-sm border border-orange-100 relative overflow-hidden print:hidden">
           <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-orange-200 to-transparent -mr-8 -mt-8 rounded-full"></div>
           <h2 className="text-xl md:text-2xl font-bold mb-4 text-[#594A4E] leading-relaxed" style={{ fontFamily: '"M PLUS Rounded 1c", "Hiragino Maru Gothic Pro", "Yu Gothic Medium", sans-serif' }}>
             食材の可能性を広げる。<br />AIと作る新しい食卓。<br />
@@ -992,7 +992,7 @@ export default function Home() {
           </p>
         </div>
 
-        <section className="bg-white rounded-lg p-6 shadow-sm border border-orange-50">
+        <section className="bg-white rounded-lg p-6 shadow-sm border border-orange-50 print:hidden">
           <h3 className="text-lg font-bold text-[#594A4E] mb-4 border-l-4 border-[#FF8000] pl-3">
             画像から食材を読み込む
           </h3>
@@ -1013,7 +1013,7 @@ export default function Home() {
         </section>
 
         {images.length > 0 && (
-          <section className="bg-white rounded-lg p-6 shadow-sm border border-orange-50 space-y-4">
+          <section className="bg-white rounded-lg p-6 shadow-sm border border-orange-50 space-y-4 print:hidden">
             <div className="flex justify-between items-center">
               <h2 className="text-xl font-semibold border-l-4 border-[#FFAB73] pl-2 text-[#594A4E]">
                 読み込んだ画像 ({images.length}枚)
@@ -1056,7 +1056,7 @@ export default function Home() {
         )}
 
         {aggregatedList.length > 0 && (
-          <section className="bg-white rounded-lg p-6 shadow-sm border border-orange-50 space-y-6">
+          <section className="bg-white rounded-lg p-6 shadow-sm border border-orange-50 space-y-6 print:hidden">
             <div className="flex justify-between items-center">
               <h2 className="text-xl font-bold text-[#594A4E] flex items-center gap-2 border-b pb-2">
                 <span className="text-[#FF8000]">🥕</span> 今ある食材リスト
@@ -1212,7 +1212,7 @@ export default function Home() {
 
 
 
-            <div id="settings-area" className="bg-white rounded-xl p-6 border-2 border-[#FF8000]/20 mt-8 scroll-mt-24 shadow-sm relative section-card">
+            <div id="settings-area" className="bg-white rounded-xl p-6 border-2 border-[#FF8000]/20 mt-8 scroll-mt-24 shadow-sm relative section-card print:hidden">
               <div className="absolute top-0 left-1/2 -translate-x-1/2 -mt-3 bg-[#FF8000] text-white px-4 py-1 rounded-full text-xs font-bold tracking-widest shadow-sm">
                 CONDITIONS
               </div>
@@ -1320,7 +1320,7 @@ export default function Home() {
         {menuResult && (
           <section className="space-y-6 pt-8 border-t-2 border-dashed border-gray-300">
             {/* 献立リセット・保存ボタン */}
-            <div className="flex justify-end gap-3 mb-4 items-center">
+            <div className="flex justify-end gap-3 mb-4 items-center print:hidden">
               <button
                 onClick={handleSaveMenu}
                 className="flex items-center gap-2 px-4 py-2 bg-white border border-[#FF8000] text-[#FF8000] rounded-lg text-sm font-bold hover:bg-[#FFF0E6] transition shadow-sm"
@@ -1464,7 +1464,7 @@ export default function Home() {
 
         {
           summaryResult && (
-            <section className="bg-white rounded-xl shadow-xl border-4 border-orange-200 overflow-hidden mb-32 print:block print:w-full print:border-none print:shadow-none print:mb-0">
+            <section className="bg-white rounded-xl shadow-xl border-4 border-orange-200 overflow-hidden mb-32 print:block print:w-full print:border-none print:shadow-none print:mb-0 print:break-before-page">
               <div className="bg-[#FF8000] p-6 text-white text-center relative print:py-4 print:px-6">
                 <button
                   onClick={handleResetSummary}

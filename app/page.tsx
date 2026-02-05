@@ -304,6 +304,7 @@ export default function Home() {
   };
   const [savedMenus, setSavedMenus] = useState<SavedMenu[]>([]);
   const [showSavedMenus, setShowSavedMenus] = useState(false);
+  const [showBannedItems, setShowBannedItems] = useState(false);
   const [currentMenuId, setCurrentMenuId] = useState<string | null>(null);
   const [currentMenuName, setCurrentMenuName] = useState<string | null>(null);
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
@@ -411,7 +412,7 @@ export default function Home() {
     setStatusMessage("");
     setMenuResult(null);
     setSummaryResult(null);
-    setBannedItems(new Set()); // 完全リセットなので禁止リストも消す
+    // 苦手リストは永続化されるのでリセットしない（モーダルから個別に削除可能）
     setIgnoredItems(new Set());
   };
 
@@ -639,6 +640,7 @@ export default function Home() {
     if (currentMenu.main) {
       newBanned.add(currentMenu.main);
       setBannedItems(newBanned);
+      localStorage.setItem("bannedItems", JSON.stringify(Array.from(newBanned)));
     }
 
     try {
@@ -881,6 +883,14 @@ export default function Home() {
         console.error("Failed to load saved menus:", e);
       }
     }
+    const storedBanned = localStorage.getItem("bannedItems");
+    if (storedBanned) {
+      try {
+        setBannedItems(new Set(JSON.parse(storedBanned)));
+      } catch (e) {
+        console.error("Failed to load banned items:", e);
+      }
+    }
   }, []);
 
   // --- 献立保存関連ハンドラー ---
@@ -951,6 +961,13 @@ export default function Home() {
 
           {/* Action Buttons */}
           <div className="flex items-center gap-3">
+            <button
+              onClick={() => setShowBannedItems(true)}
+              className="hidden md:flex items-center gap-1 text-xs md:text-sm font-bold text-[#594A4E] border border-[#d4cdc5] bg-white px-3 py-2 hover:bg-[#fcfaf8] transition rounded-sm"
+            >
+              <span>🚫 苦手リスト</span>
+              <span className="bg-gray-100 text-[10px] px-1 rounded-full">{bannedItems.size}</span>
+            </button>
             <button
               onClick={() => setShowSavedMenus(true)}
               className="hidden md:flex items-center gap-1 text-xs md:text-sm font-bold text-[#594A4E] border border-[#d4cdc5] bg-white px-3 py-2 hover:bg-[#fcfaf8] transition rounded-sm"
@@ -1750,6 +1767,67 @@ export default function Home() {
                         </div>
                       ));
                     })()}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )
+      }
+
+      {/* 苦手リスト一覧モーダル */}
+      {
+        showBannedItems && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[80vh] overflow-y-auto">
+              <div className="bg-[#594A4E] text-white p-6 sticky top-0 flex justify-between items-center z-10">
+                <div>
+                  <h2 className="text-xl font-bold flex items-center gap-2">🚫 苦手リスト</h2>
+                  <p className="text-white/90 text-sm mt-1">今後の献立提案から除外されます</p>
+                </div>
+                <button onClick={() => setShowBannedItems(false)} className="text-white/80 hover:text-white text-2xl bg-white/20 rounded-full w-8 h-8 flex items-center justify-center">✕</button>
+              </div>
+              <div className="p-4 space-y-3">
+                {bannedItems.size === 0 ? (
+                  <div className="text-center py-8">
+                    <div className="text-5xl mb-4">😋</div>
+                    <p className="text-gray-500">苦手な料理は登録されていません</p>
+                    <p className="text-gray-400 text-sm mt-2">献立カードの🚫ボタンで登録できます</p>
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    {Array.from(bannedItems).map((item) => (
+                      <div key={item} className="bg-white rounded-lg p-4 border border-red-100 shadow-sm flex justify-between items-center">
+                        <div className="flex items-center gap-3">
+                          <span className="text-red-400">🚫</span>
+                          <p className="font-medium text-gray-800">{item}</p>
+                        </div>
+                        <button
+                          onClick={() => {
+                            const newBanned = new Set(bannedItems);
+                            newBanned.delete(item);
+                            setBannedItems(newBanned);
+                            localStorage.setItem("bannedItems", JSON.stringify(Array.from(newBanned)));
+                          }}
+                          className="text-sm text-gray-400 hover:text-green-600 px-3 py-1 border border-gray-200 rounded-lg hover:border-green-300 transition"
+                        >
+                          解除
+                        </button>
+                      </div>
+                    ))}
+                    <div className="pt-4 border-t mt-4">
+                      <button
+                        onClick={() => {
+                          if (confirm("苦手リストをすべてクリアしますか？")) {
+                            setBannedItems(new Set());
+                            localStorage.removeItem("bannedItems");
+                          }
+                        }}
+                        className="w-full text-sm text-gray-400 hover:text-red-500 py-2 transition"
+                      >
+                        🗑️ すべてクリア
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>

@@ -1311,8 +1311,8 @@ export default function Home() {
 
         {isGeneratingMenu && (
           <div className="text-center py-12 animate-pulse">
-            <div className="text-4xl mb-4">👨‍🍳</div>
-            <p className="text-xl font-bold text-gray-600">プロの料理人が献立を考えています...</p>
+            <div className="text-4xl mb-4">🤖</div>
+            <p className="text-xl font-bold text-gray-600">生成AIが献立を考えています...</p>
             <p className="text-sm text-gray-400 mt-2">（30秒ほどお待ちください）</p>
           </div>
         )}

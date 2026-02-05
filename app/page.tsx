@@ -1335,7 +1335,7 @@ export default function Home() {
         )}
 
         {menuResult && (
-          <section className="space-y-6 pt-8 border-t-2 border-dashed border-gray-300">
+          <section className="space-y-6 pt-8 border-t-2 border-dashed border-gray-300 print:border-none print:pt-0">
             {/* 献立リセット・保存ボタン */}
             <div className="flex justify-end gap-3 mb-4 items-center print:hidden">
               <button
@@ -1360,14 +1360,14 @@ export default function Home() {
               </button>
             </div>
 
-            <h2 className="text-2xl font-bold text-[#594A4E] mb-6 flex items-center gap-2 border-l-4 border-[#FF8000] pl-4">
+            <h2 className="text-2xl font-bold text-[#594A4E] mb-6 flex items-center gap-2 border-l-4 border-[#FF8000] pl-4 print:text-lg print:mb-2 print:break-after-avoid">
               🍽️ 提案された献立 <span className="text-sm font-normal text-gray-500 ml-2">({menuResult.length}日分)</span>
             </h2>
-            <div className="grid md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 print:grid-cols-1 print:gap-4">
               {menuResult.map((day, dayIndex) => {
                 if (!day || !day.meals) return null; // 安全対策
                 return (
-                  <div key={dayIndex} className="bg-white rounded-xl shadow-lg border overflow-hidden flex flex-col">
+                  <div key={dayIndex} className="bg-white rounded-xl shadow-lg border overflow-hidden flex flex-col print-avoid-break">
                     <div className="bg-[#594A4E] p-4 border-b border-[#FF9900]/20">
                       <h3 className="font-bold text-xl text-white text-center">{day.day_label}</h3>
                     </div>
